@@ -5,14 +5,22 @@ import IconButton from "@mui/material/IconButton";
 import { useState } from "react";
 import "./styles/Header.css";
 import sidebaritems from "./SidebarItems/SidebarContent.json";
-import { Button } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import axios from "axios";
 import { API } from "./API/API";
 
 function Header({ Children }) {
-  const [sidebar, setSidebar] = useState(false);
+  const [sidebar, setSidebar] = useState(false); // for handling sidebar
+  const [alertLogout, setAlertLogout] = useState(false); // for handling alert for logout
   const logincheck = true;
   const navigate = useNavigate();
 
@@ -54,13 +62,22 @@ function Header({ Children }) {
       });
   };
 
+  // code to handle logout alert
+  const handleAlertOpen = () => {
+    setAlertLogout(true);
+  };
+  const handleAlertClose = () => {
+    setAlertLogout(false);
+  };
+
   return (
     <div>
       {/* code for Header---------------------- */}
       <div className="w-full fixed overflow-hidden z-10 top-0 flex justify-between bg-[#0f1131] p-3">
-        <div className="md:w-[30%] cursor-pointer text-white  w-full font-bold text-2xl">
-          School Portal
+        <div className="md:w-[30%]  text-white  w-full font-bold text-2xl">
+          <Link to="/">School Portal</Link>
         </div>
+
         <div
           className="md:w-[20%]  w-[15%]   flex md:items-center md:content-center 
          justify-end w-full"
@@ -70,7 +87,7 @@ function Header({ Children }) {
               <Button
                 variant="contained"
                 startIcon={<PowerSettingsNewIcon />}
-                onClick={HandleLogout}
+                onClick={handleAlertOpen}
               >
                 Logout
               </Button>
@@ -124,10 +141,13 @@ function Header({ Children }) {
                 </NavLink>
               );
             })}
-            <div className="  flex m-2 items-center w-[200px] hover:bg-[#bebebe] rounded">
+            <div
+              onClick={handleAlertOpen}
+              className="flex m-2 cursor-pointer items-center w-[200px] hover:bg-[#bebebe] rounded"
+            >
               {logincheck === true ? (
-                <>
-                  <div className="m-2" onClick={HandleLogout}>
+                <div className="flex ">
+                  <div className="m-2">
                     <PowerSettingsNewIcon
                       style={{
                         fontSize: 18,
@@ -138,7 +158,7 @@ function Header({ Children }) {
                   <div className={`m-2 duration-500 ${!sidebar && "scale-0"}`}>
                     <p>Logout</p>
                   </div>
-                </>
+                </div>
               ) : (
                 <>
                   <Link to="/login">
@@ -171,6 +191,30 @@ function Header({ Children }) {
         </div>
       </div>
       {/* popper */}
+      <Dialog
+        open={alertLogout}
+        onClose={handleAlertClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Are you sure you want to logout ?"}
+        </DialogTitle>
+
+        <DialogActions>
+          <Button color="error" variant="contained" onClick={handleAlertClose}>
+            Disagree
+          </Button>
+          <Button
+            color="success"
+            variant="contained"
+            onClick={HandleLogout}
+            autoFocus
+          >
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

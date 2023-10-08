@@ -161,9 +161,6 @@ function AddCourse() {
             </div>
             {/* dialogBox */}
             <div>
-              <Button variant="outlined" onClick={handleDialogOpen}>
-                Slide in alert dialog
-              </Button>
               <Dialog
                 open={dialogopen}
                 TransitionComponent={Transition}
@@ -195,8 +192,20 @@ function AddCourse() {
                   </div>
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={handleDialogClose}>Cancel</Button>
-                  <Button onClick={handleDialogClose}>Save</Button>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={handleDialogClose}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={handleDialogClose}
+                  >
+                    Save
+                  </Button>
                 </DialogActions>
               </Dialog>
             </div>
