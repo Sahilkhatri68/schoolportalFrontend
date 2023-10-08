@@ -26,6 +26,7 @@ function Header({ Children }) {
         if (res.data !== true) return navigate("/login");
       })
       .catch((err) => {
+        navigate("/login");
         console.log(err);
       });
   };
