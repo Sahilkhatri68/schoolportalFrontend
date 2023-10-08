@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, NavLink, Navigate, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FiMenu } from "react-icons/fi";
 import IconButton from "@mui/material/IconButton";
 import { useState } from "react";
@@ -12,6 +12,7 @@ import axios from "axios";
 import { API } from "./API/API";
 
 function Header({ Children }) {
+  const [sidebar, setSidebar] = useState(false);
   const logincheck = true;
   const navigate = useNavigate();
 
@@ -33,10 +34,25 @@ function Header({ Children }) {
     checklogin();
   }, []);
 
-  const [sidebar, setSidebar] = useState(false);
   const displaySidebar = () => {
     setSidebar(!sidebar);
   };
+
+  // code for logout admin
+  const HandleLogout = () => {
+    axios
+      .get(`${API}/adminlogout`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        // console.log(res);
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div>
       {/* code for Header---------------------- */}
@@ -50,7 +66,11 @@ function Header({ Children }) {
         >
           <div className="md:flex hidden mx-2">
             {logincheck === true ? (
-              <Button variant="contained" startIcon={<PowerSettingsNewIcon />}>
+              <Button
+                variant="contained"
+                startIcon={<PowerSettingsNewIcon />}
+                onClick={HandleLogout}
+              >
                 Logout
               </Button>
             ) : (
@@ -106,7 +126,7 @@ function Header({ Children }) {
             <div className="  flex m-2 items-center w-[200px] hover:bg-[#bebebe] rounded">
               {logincheck === true ? (
                 <>
-                  <div className="m-2">
+                  <div className="m-2" onClick={HandleLogout}>
                     <PowerSettingsNewIcon
                       style={{
                         fontSize: 18,
