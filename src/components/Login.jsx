@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { API } from "./API/API";
+import { useNavigate } from "react-router-dom";
+
 function Login() {
+  const navigate = useNavigate();
   const [adminEmail, setAdminEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const HandleLogin = (e) => {
     e.preventDefault();
-    console.log(adminEmail);
-    console.log(password);
+
     axios
       .post(
         `${API}/login`,
@@ -21,12 +23,10 @@ function Login() {
         }
       )
       .then((res) => {
-        if (res.data.status === 200) {
-          alert(res.data.message);
-        } else {
-          alert(res.data.message);
+        console.log(res.status);
+        if ((res.status = 200)) {
+          navigate("/");
         }
-        console.log(res);
       })
       .catch((err) => {
         console.log(err);

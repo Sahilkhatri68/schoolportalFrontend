@@ -22,6 +22,7 @@ function Header({ Children }) {
       })
       .then((res) => {
         console.log(res);
+        if (res.data !== true) return navigate("/login");
       })
       .catch((err) => {
         console.log(err);
