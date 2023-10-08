@@ -8,6 +8,8 @@ import Aboutus from "./components/Aboutus";
 import Noutfound from "./components/Noutfound";
 import AddCourse from "./components/AddCourse";
 import Login from "./components/Login";
+import axios from "axios";
+axios.defaults.withCredentials = true;
 
 function App() {
   return (

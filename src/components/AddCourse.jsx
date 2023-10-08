@@ -22,7 +22,7 @@ function AddCourse() {
   const [dialogopen, setDialogopen] = useState(false); // state for alertdialog
   const getdata = () => {
     axios
-      .get(`${API}`)
+      .get(`${API}/getclass`)
       .then((res) => {
         setCoursedata(res.data);
         // console.log(res.data);

@@ -1,1 +1,1 @@
-export const API = "http://localhost:4000/api/getclass";
+export const API = "http://localhost:4000/api";

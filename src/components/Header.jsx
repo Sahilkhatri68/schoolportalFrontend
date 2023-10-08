@@ -8,17 +8,30 @@ import sidebaritems from "./SidebarItems/SidebarContent.json";
 import { Button } from "@mui/material";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import axios from "axios";
+import { API } from "./API/API";
+
 function Header({ Children }) {
   const logincheck = true;
   const navigate = useNavigate();
+
   const checklogin = () => {
-    if (logincheck === false) {
-      navigate("/login");
-    }
+    axios
+      .get(`${API}/login/check_have_token`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
   useEffect(() => {
     checklogin();
-  }, [checklogin]);
+  }, []);
+
   const [sidebar, setSidebar] = useState(false);
   const displaySidebar = () => {
     setSidebar(!sidebar);
@@ -30,21 +43,6 @@ function Header({ Children }) {
         <div className="md:w-[30%] cursor-pointer text-white  w-full font-bold text-2xl">
           School Portal
         </div>
-        {/* <div className="md:w-[60%]  w-full items-center text-white  md:flex hidden">
-          <NavLink
-            to="/aboutus"
-            style={({ isActive, isPending }) => {
-              return {
-                fontWeight: isActive ? "bold" : "",
-                color: isActive ? "red" : "white",
-              };
-            }}
-          >
-            <div className="md:text-[18px] text-[15px] ml-2 mr-2">AboutUs</div>
-          </NavLink>
-          <div className="md:text-[18px] text-[15px] ml-2 mr-2">Item</div>
-          <div className="md:text-[18px] text-[15px] ml-2 mr-2">Item</div>
-        </div> */}
         <div
           className="md:w-[20%]  w-[15%]   flex md:items-center md:content-center 
          justify-end w-full"
@@ -150,6 +148,7 @@ function Header({ Children }) {
           {Children}
         </div>
       </div>
+      {/* popper */}
     </div>
   );
 }
