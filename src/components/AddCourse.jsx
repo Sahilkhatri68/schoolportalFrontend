@@ -10,6 +10,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { Link } from "react-router-dom";
+import { Alert } from "@mui/material";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -20,6 +21,10 @@ function AddCourse() {
   const [Search, setSearch] = useState(""); //state for course search
   const [searchduration, setSearchduration] = useState(""); //state for duration search
   const [dialogopen, setDialogopen] = useState(false); // state for alertdialog
+
+  const [className, setClassName] = useState(""); // state for adding new class
+  const [duration, setDuration] = useState(""); // state for adding new class
+  // const [classCreatedAlert, setClassCreatedAlert] = useState(false);
   const getdata = () => {
     axios
       .get(`${API}/getclass`)
@@ -44,8 +49,30 @@ function AddCourse() {
     setDialogopen(false);
   };
 
+  // code to add new class
+  const handleNewClass = () => {
+    axios
+      .post(`${API}/addnewclass`, {
+        className: className,
+        duration: duration,
+      })
+      .then((res) => {
+        if (res.status === 201) {
+          getdata();
+          alert(res.data.message);
+          // setClassCreatedAlert(true);
+          console.log(res);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div>
+      {/* ClassCreateAlert Box */}
+
       <Header
         Children={
           <div className="p-2">
@@ -177,6 +204,8 @@ function AddCourse() {
                         <input
                           type="text"
                           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          name={className}
+                          onChange={(e) => setClassName(e.target.value)}
                         />
                       </div>
                     </div>
@@ -186,6 +215,8 @@ function AddCourse() {
                         <input
                           type="text"
                           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          name={duration}
+                          onChange={(e) => setDuration(e.target.value)}
                         />
                       </div>
                     </div>
@@ -202,7 +233,7 @@ function AddCourse() {
                   <Button
                     variant="contained"
                     color="success"
-                    onClick={handleDialogClose}
+                    onClick={handleNewClass}
                   >
                     Save
                   </Button>
