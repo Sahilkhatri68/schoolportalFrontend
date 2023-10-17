@@ -5,6 +5,7 @@ import { Button, InputLabel, MenuItem, Select } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
 import { API } from "./API/API";
+import { ToastContainer, toast } from "react-toastify";
 
 function Body({ Children }) {
   const [totalstudents, setTotalstudents] = useState([]); // state for fetching all students
@@ -24,7 +25,7 @@ function Body({ Children }) {
     axios
       .get(`${API}/getallstudent`)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setTotalstudents(res.data);
       })
       .catch((err) => {
@@ -37,7 +38,7 @@ function Body({ Children }) {
     axios
       .get(`${API}/getclass`)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
         setFetchedclasses(res.data);
       })
       .catch((err) => {
@@ -65,11 +66,27 @@ function Body({ Children }) {
       })
       .then((res) => {
         console.log(res);
+        if (res.data.status === "success") {
+          toast("Student Registered", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+        }
+        setTimeout(() => {
+          window.location.reload(true);
+        }, [2000]);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  // toatalert
 
   return (
     <div>

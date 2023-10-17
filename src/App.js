@@ -1,6 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Body from "./components/Body";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Account from "./components/Account";
 import Support from "./components/Support";
 import BugReport from "./components/BugReport";
@@ -24,6 +26,19 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="*" element={<Noutfound />}></Route>
       </Routes>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
   );
 }

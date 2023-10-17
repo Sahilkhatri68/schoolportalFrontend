@@ -27,7 +27,7 @@ function AddCourse() {
   // const [classCreatedAlert, setClassCreatedAlert] = useState(false);
   const getdata = () => {
     axios
-      .get(`${API}/getclass`)
+      .get(`${API}/getclass/getclassbystudent`)
       .then((res) => {
         setCoursedata(res.data);
         // console.log(res.data);
@@ -163,7 +163,7 @@ function AddCourse() {
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                       <div className="text-sm leading-5 text-gray-900">
-                                        10
+                                        {i.classStudents.length}
                                       </div>
                                     </td>
 
