@@ -11,6 +11,7 @@ import Noutfound from "./components/Noutfound";
 import AddCourse from "./components/AddCourse";
 import Login from "./components/Login";
 import axios from "axios";
+import ViewCourseDetail from "./components/ViewCourseDetail";
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -24,6 +25,10 @@ function App() {
         <Route path="/aboutus" element={<Aboutus />}></Route>
         <Route path="/addcourse" element={<AddCourse />}></Route>
         <Route path="/login" element={<Login />}></Route>
+        <Route
+          path="/viewcoursedetail/:_id"
+          element={<ViewCourseDetail />}
+        ></Route>
         <Route path="*" element={<Noutfound />}></Route>
       </Routes>
 

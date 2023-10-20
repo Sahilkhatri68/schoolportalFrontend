@@ -30,7 +30,7 @@ function AddCourse() {
       .get(`${API}/getclass/getclassbystudent`)
       .then((res) => {
         setCoursedata(res.data);
-        // console.log(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -169,10 +169,10 @@ function AddCourse() {
 
                                     <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
                                       <Link
-                                        to="/"
+                                        to={`/viewcoursedetail/${i._id}`}
                                         className="text-indigo-600 hover:text-indigo-900 focus:outline-none focus:underline"
                                       >
-                                        Show
+                                        View
                                       </Link>
                                     </td>
                                   </tr>
