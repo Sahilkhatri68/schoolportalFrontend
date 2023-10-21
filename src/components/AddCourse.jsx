@@ -30,7 +30,7 @@ function AddCourse() {
       .get(`${API}/getclass/getclassbystudent`)
       .then((res) => {
         setCoursedata(res.data);
-        // console.log(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -128,7 +128,12 @@ function AddCourse() {
                             <th className="px-6 py-3 text-left font-semibold">
                               Total Students
                             </th>
-                            <th className="px-6 py-3 text-left font-semibold"></th>
+                            <th className="px-6 py-3 text-left font-semibold">
+                              Teacher
+                            </th>
+                            <th className="px-6 py-3 text-left font-semibold">
+                              View
+                            </th>
                           </tr>
                         </thead>
                         <tbody className="bg-white">
@@ -165,14 +170,21 @@ function AddCourse() {
                                         {i.classStudents.length}
                                       </div>
                                     </td>
+                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                      <div className="text-sm leading-5 text-gray-900">
+                                        {i.classAssignedTeachers.teachername}
+                                      </div>
+                                    </td>
 
-                                    <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
-                                      <Link
-                                        to={`/viewcoursedetail/${i._id}`}
-                                        className="text-indigo-600 hover:text-indigo-900 focus:outline-none focus:underline"
-                                      >
-                                        View
-                                      </Link>
+                                    <td className="px-6 py-4 whitespace-no-wrap text-left border-b border-gray-200 text-sm leading-5 font-medium">
+                                      <div className="text-sm leading-5 text-gray-900">
+                                        <Link
+                                          to={`/viewcoursedetail/${i._id}`}
+                                          className="text-indigo-600 hover:text-indigo-900 focus:outline-none focus:underline"
+                                        >
+                                          View
+                                        </Link>
+                                      </div>
                                     </td>
                                   </tr>
                                 );
