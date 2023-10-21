@@ -12,6 +12,7 @@ import AddCourse from "./components/AddCourse";
 import Login from "./components/Login";
 import axios from "axios";
 import ViewCourseDetail from "./components/ViewCourseDetail";
+import AddTeacher from "./components/AddTeacher";
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/aboutus" element={<Aboutus />}></Route>
         <Route path="/addcourse" element={<AddCourse />}></Route>
         <Route path="/login" element={<Login />}></Route>
+        <Route path="/addteacher" element={<AddTeacher />}></Route>
         <Route
           path="/viewcoursedetail/:_id"
           element={<ViewCourseDetail />}

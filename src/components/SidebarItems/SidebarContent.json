@@ -28,5 +28,11 @@
     "title": "Add Course",
     "icon": "bi-database-fill-add",
     "path": "/addcourse"
+  },
+  {
+    "id": 6,
+    "title": "Add Teacher",
+    "icon": "bi-person-fill-up",
+    "path": "/addteacher"
   }
 ]

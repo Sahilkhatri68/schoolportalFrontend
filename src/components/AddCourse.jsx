@@ -30,7 +30,7 @@ function AddCourse() {
       .get(`${API}/getclass/getclassbystudent`)
       .then((res) => {
         setCoursedata(res.data);
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -72,7 +72,6 @@ function AddCourse() {
   return (
     <div>
       {/* ClassCreateAlert Box */}
-
       <Header
         Children={
           <div className="p-2">
