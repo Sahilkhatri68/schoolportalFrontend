@@ -38,7 +38,7 @@ function Body({ Children }) {
     axios
       .get(`${API}/getclass`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setFetchedclasses(res.data);
       })
       .catch((err) => {
@@ -93,7 +93,7 @@ function Body({ Children }) {
       <Header
         Children={
           <div>
-            <div className="container my-6 mx-auto px-4 md:px-12">
+            <div className="my-6 mx-auto px-4 md:px-12">
               <div className="flex flex-wrap -mx-1 lg:-mx-4">
                 {/* Column */}
                 <div className="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
@@ -160,7 +160,7 @@ function Body({ Children }) {
                         </label>
                         <input
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                          id="grid-last-name"
+                          id="name"
                           type="text"
                           placeholder="Doe"
                           name={name}
@@ -179,7 +179,7 @@ function Body({ Children }) {
                         </label>
                         <input
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                          id="grid-last-name"
+                          id="phone"
                           type="number"
                           placeholder="XXX487XXX"
                           name={phone}
@@ -197,9 +197,9 @@ function Body({ Children }) {
                         </label>
                         <input
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                          id="grid-last-name"
+                          id="email"
                           type="text"
-                          placeholder="Doe"
+                          placeholder="Doe@gmail.com"
                           name={email}
                           onChange={(e) => setEmail(e.target.value)}
                         />
@@ -216,7 +216,7 @@ function Body({ Children }) {
                         </label>
                         <input
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                          id="grid-last-name"
+                          id="password"
                           type="password"
                           placeholder="******************"
                           name={password}
@@ -241,11 +241,9 @@ function Body({ Children }) {
                           <option value="">----Select Class----</option>
                           {fetchedclasses.map((i) => {
                             return (
-                              <>
-                                <option key={i._id} value={i._id}>
-                                  {i.className}
-                                </option>
-                              </>
+                              <option key={i._id} value={i._id}>
+                                {i.className}
+                              </option>
                             );
                           })}
                         </select>
@@ -261,7 +259,7 @@ function Body({ Children }) {
                         </label>
                         <input
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                          id="grid-city"
+                          id="number"
                           type="number"
                           placeholder="Albuquerque"
                           name={age}
@@ -277,7 +275,7 @@ function Body({ Children }) {
                         </label>
                         <input
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                          id="grid-city"
+                          id="father-name"
                           type="text"
                           placeholder="Father name"
                           name={fathersname}
