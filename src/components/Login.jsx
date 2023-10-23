@@ -43,7 +43,11 @@ function Login() {
               School Portal
             </div>
             <p className="mt-6 font-normal text-center text-gray-300 md:mt-0">
-              Only Admin can access this portal with the email and password.
+              {/* Only Admin can access this portal with the email and password. */}
+              <br />
+              Its a demo portal & you can access with
+              <br /> email : admin123@gmail.com
+              <br /> password : admin123
               <br />
               <span className="text-[13px]">
                 If you faced any issue in the portal then please contact the
