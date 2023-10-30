@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Account from "./components/Account";
 import Support from "./components/Support";
-import BugReport from "./components/BugReport";
+import Viewteacher from "./components/Viewteacher";
 import Aboutus from "./components/Aboutus";
 import Noutfound from "./components/Noutfound";
 import AddCourse from "./components/AddCourse";
@@ -22,7 +22,7 @@ function App() {
         <Route path="/" element={<Body />}></Route>
         <Route path="/account" element={<Account />}></Route>
         <Route path="/support" element={<Support />}></Route>
-        <Route path="/bug" element={<BugReport />}></Route>
+        <Route path="/viewteacher" element={<Viewteacher />}></Route>
         <Route path="/aboutus" element={<Aboutus />}></Route>
         <Route path="/addcourse" element={<AddCourse />}></Route>
         <Route path="/login" element={<Login />}></Route>

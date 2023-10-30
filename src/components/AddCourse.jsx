@@ -172,7 +172,8 @@ function AddCourse() {
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                       <div className="text-sm leading-5 text-gray-900">
-                                        {i.classAssignedTeachers.teachername}
+                                        {/* {i.classAssignedTeachers[0].teachername} */}{" "}
+                                        Teacher
                                       </div>
                                     </td>
 

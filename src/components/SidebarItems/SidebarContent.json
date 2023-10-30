@@ -13,9 +13,9 @@
   },
   {
     "id": 3,
-    "title": "Bug",
-    "icon": "bi-bug-fill",
-    "path": "/bug"
+    "title": "Teacher's",
+    "icon": "bi-person-workspace",
+    "path": "/viewteacher"
   },
   {
     "id": 4,
