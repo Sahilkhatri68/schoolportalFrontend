@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { API } from "./API/API";
 import axios from "axios";
-// mui alert dep
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -10,7 +9,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { Link } from "react-router-dom";
-import { Alert } from "@mui/material";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -21,10 +19,11 @@ function AddCourse() {
   const [Search, setSearch] = useState(""); //state for course search
   const [searchduration, setSearchduration] = useState(""); //state for duration search
   const [dialogopen, setDialogopen] = useState(false); // state for alertdialog
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [className, setClassName] = useState(""); // state for adding new class
   const [duration, setDuration] = useState(""); // state for adding new class
-  // const [classCreatedAlert, setClassCreatedAlert] = useState(false);
+
   const getdata = () => {
     axios
       .get(`${API}/getclass/getclassbystudent`)
@@ -40,17 +39,29 @@ function AddCourse() {
     getdata();
   }, []);
 
-  // funtion to open dialogbox
+  // function to open dialogbox
   const handleDialogOpen = () => {
+    setErrorMessage(""); // reset error message when dialog opens
+    setClassName(""); // reset input fields
+    setDuration("");
     setDialogopen(true);
   };
   // function to close dialogbox
   const handleDialogClose = () => {
     setDialogopen(false);
+    setErrorMessage("");
+  };
+
+  const resetCourseFormData = () => {
+    setDialogopen(false);
+    setErrorMessage("");
+    setClassName("");
+    setDuration("");
   };
 
   // code to add new class
   const handleNewClass = () => {
+    setErrorMessage(""); // reset error before request
     axios
       .post(`${API}/addnewclass`, {
         className: className,
@@ -58,20 +69,39 @@ function AddCourse() {
       })
       .then((res) => {
         if (res.status === 201) {
+          resetCourseFormData();
           getdata();
           alert(res.data.message);
-          // setClassCreatedAlert(true);
-          console.log(res);
         }
       })
       .catch((err) => {
-        console.log(err);
+        // Check if backend sent validation error message
+        if (err.response && err.response.data && err.response.data.message) {
+          setErrorMessage(err.response.data.message);
+        } else {
+          setErrorMessage("An error occurred while adding the class.");
+        }
       });
+  };
+
+  // Async delete function with try/catch
+  const deletecourse = async (id) => {
+    try {
+      const res = await axios.delete(`${API}/getclass/getclassbystudent/${id}`);
+      if (res.status === 200) {
+        alert(res.data.message || "Class deleted successfully");
+        getdata(); // Refresh course list after deletion
+      } else {
+        alert("Failed to delete class");
+      }
+    } catch (err) {
+      console.error("Error deleting class:", err);
+      alert("Failed to delete class");
+    }
   };
 
   return (
     <div>
-      {/* ClassCreateAlert Box */}
       <Header
         Children={
           <div className="p-2">
@@ -89,7 +119,7 @@ function AddCourse() {
                       <div>
                         <input
                           className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                          id="inline-searcg"
+                          id="inline-search"
                           type="text"
                           placeholder="Search Course"
                           onChange={(e) => setSearch(e.target.value)}
@@ -97,7 +127,7 @@ function AddCourse() {
                         <br />
                         <input
                           className="bg-gray-200 mt-2 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                          id="inline-searcg"
+                          id="inline-search-duration"
                           type="text"
                           placeholder="Search Duration"
                           onChange={(e) => setSearchduration(e.target.value)}
@@ -116,7 +146,6 @@ function AddCourse() {
                   <div className="-my-2 py-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
                     <div className="align-middle inline-block w-full shadow overflow-x-auto sm:rounded-lg border-b border-gray-200">
                       <table className="min-w-full">
-                        {/* HEAD start */}
                         <thead>
                           <tr className="bg-[#d8d8d8] border-b border-gray-200 text-xs leading-4 text-gray-700 uppercase font-bold tracking-wider">
                             <th className="px-6 py-3 text-left font-semibold">
@@ -129,10 +158,10 @@ function AddCourse() {
                               Total Students
                             </th>
                             <th className="px-6 py-3 text-left font-semibold">
-                              Teacher
+                              View
                             </th>
                             <th className="px-6 py-3 text-left font-semibold">
-                              View
+                              Delete
                             </th>
                           </tr>
                         </thead>
@@ -160,9 +189,6 @@ function AddCourse() {
                                     <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                       <div className="flex items-center">
                                         {i.duration}
-                                        <div className="ml-4">
-                                          <div className="text-sm leading-5 font-medium text-gray-900"></div>
-                                        </div>
                                       </div>
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -170,28 +196,34 @@ function AddCourse() {
                                         {i.classStudents.length}
                                       </div>
                                     </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                      <div className="text-sm leading-5 text-gray-900">
-                                        {/* {i.classAssignedTeachers[0].teachername} */}{" "}
-                                        Teacher
-                                      </div>
-                                    </td>
-
                                     <td className="px-6 py-4 whitespace-no-wrap text-left border-b border-gray-200 text-sm leading-5 font-medium">
-                                      <div className="text-sm leading-5 text-gray-900">
-                                        <Link
-                                          to={`/viewcoursedetail/${i._id}`}
-                                          className="text-indigo-600 hover:text-indigo-900 focus:outline-none focus:underline"
-                                        >
-                                          View
-                                        </Link>
-                                      </div>
+                                      <Link
+                                        to={`/viewcoursedetail/${i._id}`}
+                                        className="text-indigo-600 hover:text-indigo-900 focus:outline-none focus:underline"
+                                      >
+                                        View
+                                      </Link>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-no-wrap text-left border-b border-gray-200 text-sm leading-5 font-medium">
+                                      <button
+                                        className="inline-block px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-red-600 hover:bg-red-800 focus:outline-none focus:shadow-outline"
+                                        onClick={() => {
+                                          if (
+                                            window.confirm(
+                                              "Are you sure you want to delete this class?"
+                                            )
+                                          ) {
+                                            deletecourse(i._id);
+                                          }
+                                        }}
+                                      >
+                                        Delete
+                                      </button>
                                     </td>
                                   </tr>
                                 );
                               })}
                         </tbody>
-                        {/* BODY end */}
                       </table>
                     </div>
                   </div>
@@ -210,13 +242,19 @@ function AddCourse() {
                 <DialogTitle>{"Enter New Course"}</DialogTitle>
                 <DialogContent>
                   <div>
+                    {/* Show error message if any */}
+                    {errorMessage && (
+                      <div className="text-red-600 font-semibold mb-2">
+                        {errorMessage}
+                      </div>
+                    )}
                     <div className="md:flex m-2 items-center">
                       <div className="md:w-[150px] w-full">Course Name</div>
                       <div className="md:mx-4">
                         <input
                           type="text"
                           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                          name={className}
+                          value={className}
                           onChange={(e) => setClassName(e.target.value)}
                         />
                       </div>
@@ -227,7 +265,7 @@ function AddCourse() {
                         <input
                           type="text"
                           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                          name={duration}
+                          value={duration}
                           onChange={(e) => setDuration(e.target.value)}
                         />
                       </div>

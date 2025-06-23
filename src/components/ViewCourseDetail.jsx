@@ -3,7 +3,8 @@ import Header from "./Header";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { API } from "./API/API";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function ViewCourseDetail() {
   const { _id } = useParams();
@@ -37,6 +38,10 @@ function ViewCourseDetail() {
   useEffect(() => {
     getClassWithStdDetails();
   }, []);
+
+  const handleDelete = (_id) => {
+    alert("DELETE" + _id);
+  };
 
   return (
     <div>
@@ -140,6 +145,9 @@ function ViewCourseDetail() {
                             <th className="px-6 py-3 text-left font-semibold">
                               Join Date
                             </th>
+                            <th className="px-6 py-3 text-left font-semibold">
+                              Delete
+                            </th>
                           </tr>
                         </thead>
 
@@ -210,6 +218,15 @@ function ViewCourseDetail() {
                                       <div className="text-sm leading-5 text-gray-900">
                                         {i.joindate}
                                       </div>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                      <IconButton
+                                        color="error"
+                                        aria-label="delete"
+                                        onClick={() => handleDelete(i._id)}
+                                      >
+                                        <DeleteIcon />
+                                      </IconButton>
                                     </td>
                                   </tr>
                                 );
